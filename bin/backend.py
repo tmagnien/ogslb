@@ -86,7 +86,14 @@ def DNSLookup(db, query):
          logger.debug(addresss)
 
          # pick a random address from the list of addresses matching the high priority
-         selectedAddres = random.choice(addresss)
+         # Change by TMA : select lowest speed
+         selectedAddres = None
+
+         for addr in addresss:
+             if selectedAddres == None:
+                 selectedAddres = addr
+             elif addressData[addr]['speed'] < addressData[selectedAddres]['speed']:
+                 selectedAddres = addr
 
          # if there is an address type (such as CNAME)  set, use it.  Otherwise, assume it's an 'A' record
          try:
