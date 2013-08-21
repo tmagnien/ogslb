@@ -152,7 +152,7 @@ def main(argv):
    logger.info("startup: db type: %s" % BackendType)
 
    # parse the poller config
-   vips = ParseXML.parseXML(pollerFile);
+   vips = ParseXML.parseXML(pollerFile)
 
    # for each of the hostnames we are monitoring, we stick the name in redis
    # that way, we can associate which timeseries keys we are monitoring
@@ -176,7 +176,10 @@ def main(argv):
    # start looping pushing jobs into the queue
    passCounter = 0
    while(True):
+      # reload poller.xml
+      vips = ParseXML.parseXML(pollerFile)
       for vip in vips:
+         stats.sput("stats.hostlist", v)
          for data in vips[vip]['data']:
             pollerQueue.put((vip, data, passCounter))
 
