@@ -84,11 +84,18 @@ def get(data, queue, passCount, Config):
       checkResponse = 0
 
    # format the url
-   try:
-      url = 'http://' + data['address'] + ":" + data['port'] + data['url']
-   except:
-      url = 'http://' + data['address'] + data['url']
-      data['port'] = 80
+   if 'polladdress' in data:
+      try:
+         url = 'http://' + data['polladdress'] + ":" + data['port'] + data['url']
+      except:
+         url = 'http://' + data['polladdress'] + data['url']
+	 data['port'] = 80
+   else:
+      try:
+         url = 'http://' + data['address'] + ":" + data['port'] + data['url']
+      except:
+         url = 'http://' + data['address'] + data['url']
+         data['port'] = 80
 
    # do the get and time it
    t1 = time.time()

@@ -90,9 +90,9 @@ def DNSLookup(db, query):
          selectedAddres = None
 
          for addr in addresss:
-             if selectedAddres == None:
+             if selectedAddres == None and addressData[addr]['status'] == 1:
                  selectedAddres = addr
-             elif addressData[addr]['speed'] < addressData[selectedAddres]['speed']:
+             elif addressData[addr]['speed'] < addressData[selectedAddres]['speed'] and addressData[addr]['status'] == 1:
                  selectedAddres = addr
 
          # if there is an address type (such as CNAME)  set, use it.  Otherwise, assume it's an 'A' record
